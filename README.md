@@ -1,3 +1,5 @@
+# dwdd
+
 # Dokumentasi API `apiSoal`
 
 API ini menyediakan endpoint untuk mengambil data soal berdasarkan berbagai kriteria seperti label tertentu, beberapa label, atau tanpa kriteria tertentu dengan opsi pembatasan jumlah data yang diambil.
@@ -8,15 +10,16 @@ API ini menyediakan endpoint untuk mengambil data soal berdasarkan berbagai krit
 
 ### Parameter Permintaan
 
-| Parameter   | Tipe Data     | Deskripsi                                                                 |
-|-------------|---------------|---------------------------------------------------------------------------|
-| `label`     | string (opsional) | ID label tunggal untuk mendapatkan soal berdasarkan label tersebut.        |
-| `labels`    | array (opsional)  | Array ID label untuk mendapatkan soal berdasarkan beberapa label.         |
-| `limit`     | integer (opsional)| Jumlah data maksimal yang dikembalikan (default: 50, maksimal: 250).      |
+| Parameter | Tipe Data          | Deskripsi                                                            |
+| --------- | ------------------ | -------------------------------------------------------------------- |
+| `label`   | string (opsional)  | ID label tunggal untuk mendapatkan soal berdasarkan label tersebut.  |
+| `labels`  | array (opsional)   | Array ID label untuk mendapatkan soal berdasarkan beberapa label.    |
+| `limit`   | integer (opsional) | Jumlah data maksimal yang dikembalikan (default: 50, maksimal: 250). |
 
 ### Respons
 
 #### Format Respons JSON
+
 ```json
 {
     "data": [
@@ -35,13 +38,16 @@ API ini menyediakan endpoint untuk mengambil data soal berdasarkan berbagai krit
 ### Detail Logika API
 
 1. **Tanpa Parameter**:
+
     - Jika permintaan tidak menyertakan `label` atau `labels`, API akan mengembalikan soal terbaru beserta labelnya dengan limit default 50.
 
 2. **Dengan Parameter `label`**:
+
     - Jika permintaan menyertakan parameter `label`, API akan mengembalikan data soal yang memiliki label sesuai ID tersebut.
     - Jika tidak ditemukan soal yang sesuai, akan mengembalikan `data: null` dan pesan informasi.
 
 3. **Dengan Parameter `labels`**:
+
     - Jika permintaan menyertakan parameter `labels` (array ID), API akan mengembalikan data soal yang memiliki label sesuai array ID tersebut.
     - Jika tidak ditemukan soal yang sesuai, akan mengembalikan `data: []` (array kosong) dan pesan informasi.
 
@@ -52,11 +58,13 @@ API ini menyediakan endpoint untuk mengambil data soal berdasarkan berbagai krit
 ### Contoh Permintaan
 
 #### Permintaan Tanpa Parameter
+
 ```bash
 POST /api/soal
 ```
 
 #### Permintaan Dengan Parameter `label`
+
 ```bash
 POST /api/soal
 Content-Type: application/json
@@ -67,6 +75,7 @@ Content-Type: application/json
 ```
 
 #### Permintaan Dengan Parameter `labels`
+
 ```bash
 POST /api/soal
 Content-Type: application/json
@@ -77,6 +86,7 @@ Content-Type: application/json
 ```
 
 #### Permintaan Dengan Parameter `limit`
+
 ```bash
 POST /api/soal
 Content-Type: application/json
@@ -89,6 +99,7 @@ Content-Type: application/json
 ### Contoh Respons
 
 #### Respons Berhasil (Tanpa Parameter)
+
 ```json
 {
     "data": [
@@ -105,6 +116,7 @@ Content-Type: application/json
 ```
 
 #### Respons Berhasil (Dengan `label` atau `labels` Tanpa Data)
+
 ```json
 {
     "data": null,
@@ -113,6 +125,7 @@ Content-Type: application/json
 ```
 
 #### Respons Gagal (Kesalahan Validasi)
+
 ```json
 {
     "data": null,
@@ -121,6 +134,7 @@ Content-Type: application/json
 ```
 
 #### Respons Gagal (Kesalahan Server)
+
 ```json
 {
     "data": null,
@@ -129,25 +143,29 @@ Content-Type: application/json
 ```
 
 ### Catatan
-- API ini hanya mengembalikan soal yang memiliki relasi dengan label.
-- Gunakan parameter dengan benar untuk menghindari kesalahan validasi.
-- Pastikan nilai `limit` tidak melebihi batas maksimal (250).
+
+-   API ini hanya mengembalikan soal yang memiliki relasi dengan label.
+-   Gunakan parameter dengan benar untuk menghindari kesalahan validasi.
+-   Pastikan nilai `limit` tidak melebihi batas maksimal (250).
 
 # API Documentation
 
 ## Check NPM (GET)
 
 ### Endpoint
+
 **GET** `/api/check-npm`
 
 ### Request Parameters
-| Parameter | Type   | Required | Description             |
-|-----------|--------|----------|-------------------------|
-| `npm`     | string | Yes      | NPM to be checked.      |
+
+| Parameter | Type   | Required | Description        |
+| --------- | ------ | -------- | ------------------ |
+| `npm`     | string | Yes      | NPM to be checked. |
 
 ### Response
 
 #### Success Response (200)
+
 ```json
 {
     "message": "NPM bisa digunakan!"
@@ -155,6 +173,7 @@ Content-Type: application/json
 ```
 
 #### Conflict Response (409)
+
 ```json
 {
     "message": "NPM sudah terdaftar!"
@@ -162,6 +181,7 @@ Content-Type: application/json
 ```
 
 #### Error Response (500)
+
 ```json
 {
     "message": "Server gagal memproses permintaan"
@@ -173,15 +193,18 @@ Content-Type: application/json
 ## Check NPM (POST)
 
 ### Endpoint
+
 **POST** `/api/check-npm`
 
 ### Request Body
-| Parameter   | Type    | Required | Description                       |
-|-------------|---------|----------|-----------------------------------|
-| `npm`       | array   | Yes      | Array of NPMs to be checked.      |
-| `npm.*`     | string  | Yes      | Each item in the NPM array.       |
+
+| Parameter | Type   | Required | Description                  |
+| --------- | ------ | -------- | ---------------------------- |
+| `npm`     | array  | Yes      | Array of NPMs to be checked. |
+| `npm.*`   | string | Yes      | Each item in the NPM array.  |
 
 #### Example Request
+
 ```json
 {
     "npm": ["123456789", "987654321"]
@@ -191,6 +214,7 @@ Content-Type: application/json
 ### Response
 
 #### Success Response (200)
+
 ```json
 {
     "message": "Semua NPM dapat digunakan",
@@ -199,6 +223,7 @@ Content-Type: application/json
 ```
 
 #### Conflict Response (409)
+
 ```json
 {
     "message": "Ada sebagian data dengan NPM yang sudah terdaftar, cek errors untuk informasi lengkapnya",
@@ -207,6 +232,7 @@ Content-Type: application/json
 ```
 
 #### Error Response (500)
+
 ```json
 {
     "message": "Server gagal memproses permintaan"
@@ -216,27 +242,31 @@ Content-Type: application/json
 ---
 
 ### Catatan
-- Pastikan parameter yang dikirimkan sesuai dengan format yang diminta untuk menghindari kesalahan validasi.
-- Gunakan endpoint ini hanya untuk memeriksa ketersediaan NPM, tidak untuk tujuan lain.
-- Jika terjadi kesalahan server, coba ulangi beberapa saat lagi atau hubungi tim teknis.
+
+-   Pastikan parameter yang dikirimkan sesuai dengan format yang diminta untuk menghindari kesalahan validasi.
+-   Gunakan endpoint ini hanya untuk memeriksa ketersediaan NPM, tidak untuk tujuan lain.
+-   Jika terjadi kesalahan server, coba ulangi beberapa saat lagi atau hubungi tim teknis.
 
 ---
 
 ## Get Praktikans
 
 ### Endpoint
+
 **POST** `/api/get-praktikans`
 
 ### Request Body
-| Parameter   | Type    | Required | Description                                                           |
-|-------------|---------|----------|-----------------------------------------------------------------------|
-| `search`    | string  | No       | Search query to filter praktikans by `nama` or `npm` (optional).       |
-| `npm`       | array   | Yes      | Array of NPMs to filter praktikans.                                   |
-| `npm.*`     | string  | Yes      | Each item in the NPM array.                                           |
-| `columns`   | array   | No       | Array of columns to select (`id`, `nama`, `npm`, `username`, `avatar`).|
-| `columns.*` | string  | No       | Valid column name (`id`, `nama`, `npm`, `username`, `avatar`).        |
+
+| Parameter   | Type   | Required | Description                                                             |
+| ----------- | ------ | -------- | ----------------------------------------------------------------------- |
+| `search`    | string | No       | Search query to filter praktikans by `nama` or `npm` (optional).        |
+| `npm`       | array  | Yes      | Array of NPMs to filter praktikans.                                     |
+| `npm.*`     | string | Yes      | Each item in the NPM array.                                             |
+| `columns`   | array  | No       | Array of columns to select (`id`, `nama`, `npm`, `username`, `avatar`). |
+| `columns.*` | string | No       | Valid column name (`id`, `nama`, `npm`, `username`, `avatar`).          |
 
 #### Example Request
+
 ```json
 {
     "search": "John",
@@ -248,7 +278,9 @@ Content-Type: application/json
 ### Response
 
 #### Success Response (200)
+
 If data is found:
+
 ```json
 {
     "message": "Berhasil mengambil data!",
@@ -263,6 +295,7 @@ If data is found:
 ```
 
 If no data matches the query:
+
 ```json
 {
     "message": "Server berhasil memproses permintaan, namun tidak ada data yang sesuai dengan pencarian diminta",
@@ -271,6 +304,7 @@ If no data matches the query:
 ```
 
 #### Error Response (500)
+
 ```json
 {
     "message": "Server gagal memproses permintaan"
@@ -292,13 +326,13 @@ If no data matches the query:
 
 Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+-   [Simple, fast routing engine](https://laravel.com/docs/routing).
+-   [Powerful dependency injection container](https://laravel.com/docs/container).
+-   Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
+-   Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
+-   Database agnostic [schema migrations](https://laravel.com/docs/migrations).
+-   [Robust background job processing](https://laravel.com/docs/queues).
+-   [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
 
 Laravel is accessible, powerful, and provides tools required for large, robust applications.
 
@@ -316,19 +350,19 @@ We would like to extend our thanks to the following sponsors for funding Laravel
 
 ### Premium Partners
 
-- **[Vehikl](https://vehikl.com/)**
-- **[Tighten Co.](https://tighten.co)**
-- **[WebReinvent](https://webreinvent.com/)**
-- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
-- **[64 Robots](https://64robots.com)**
-- **[Curotec](https://www.curotec.com/services/technologies/laravel/)**
-- **[Cyber-Duck](https://cyber-duck.co.uk)**
-- **[DevSquad](https://devsquad.com/hire-laravel-developers)**
-- **[Jump24](https://jump24.co.uk)**
-- **[Redberry](https://redberry.international/laravel/)**
-- **[Active Logic](https://activelogic.com)**
-- **[byte5](https://byte5.de)**
-- **[OP.GG](https://op.gg)**
+-   **[Vehikl](https://vehikl.com/)**
+-   **[Tighten Co.](https://tighten.co)**
+-   **[WebReinvent](https://webreinvent.com/)**
+-   **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
+-   **[64 Robots](https://64robots.com)**
+-   **[Curotec](https://www.curotec.com/services/technologies/laravel/)**
+-   **[Cyber-Duck](https://cyber-duck.co.uk)**
+-   **[DevSquad](https://devsquad.com/hire-laravel-developers)**
+-   **[Jump24](https://jump24.co.uk)**
+-   **[Redberry](https://redberry.international/laravel/)**
+-   **[Active Logic](https://activelogic.com)**
+-   **[byte5](https://byte5.de)**
+-   **[OP.GG](https://op.gg)**
 
 ## Contributing
 
