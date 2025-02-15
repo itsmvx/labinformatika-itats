@@ -131,46 +131,39 @@ Route::prefix('sesi-praktikum')->name('sesi-praktikum.')->group(function () {
     Route::post('/update', [SesiPraktikumController::class, 'update'])->name('update');
     Route::post('/delete', [SesiPraktikumController::class, 'destroy'])->name('delete');
 });
-//Route::prefix('aslab')->name('aslab.')->group(function () {
-//    Route::post('/create', [AslabController::class, 'store'])->name('create');
-//    Route::post('/update', [AslabController::class, 'update'])->name('update');
-//    Route::post('/delete', [AslabController::class, 'destroy'])->name('delete');
-//    Route::post('/upload-avatar', [AslabController::class, 'uploadAvatar'])->name('upload-avatar');
-//
-//});
+Route::prefix('praktikum-praktikan')->name('praktikum-praktikan.')->group(function () {
+    Route::post('/create', [PraktikumPraktikanController::class, 'store'])->name('create');
+    Route::post('/create-mass', [PraktikumPraktikanController::class, 'storeMass'])->name('create-mass');
+    Route::post('/update', [PraktikumPraktikanController::class, 'update'])->name('update');
+    Route::post('/delete', [PraktikumPraktikanController::class, 'destroy'])->name('delete');
+    Route::post('/verifikasi', [PraktikumPraktikanController::class, 'verifikasi'])->name('verifikasi');
+});
 
-//Route::prefix('praktikum-praktikan')->name('praktikum-praktikan.')->group(function () {
-//    Route::post('/create', [PraktikumPraktikanController::class, 'store'])->name('create');
-//    Route::post('/create-mass', [PraktikumPraktikanController::class, 'storeMass'])->name('create-mass');
-//    Route::post('/update', [PraktikumPraktikanController::class, 'update'])->name('update');
-//    Route::post('/delete', [PraktikumPraktikanController::class, 'destroy'])->name('delete');
-//    Route::post('/verifikasi', [PraktikumPraktikanController::class, 'verifikasi'])->name('verifikasi');
-//});
-//Route::prefix('label')->name('label.')->group(function () {
-//    Route::post('/create', [LabelController::class, 'store'])->name('create');
-//    Route::post('/update', [LabelController::class, 'update'])->name('update');
-//    Route::post('/delete', [LabelController::class, 'destroy'])->name('delete');
-//});
-//Route::prefix('soal')->name('soal.')->group(function () {
-//    Route::post('/create', [SoalController::class, 'store'])->name('create');
-//    Route::post('/create-mass', [SoalController::class, 'storeMass'])->name('create-mass');
-//    Route::post('/update', [SoalController::class, 'update'])->name('update');
-//    Route::post('/delete', [SoalController::class, 'destroy'])->name('delete');
-//});
-//Route::prefix('kuis')->name('kuis.')->group(function () {
-//    Route::post('/create', [KuisController::class, 'store'])->name('create');
-//    Route::post('/update', [KuisController::class, 'update'])->name('update');
-//    Route::post('/delete', [KuisController::class, 'destroy'])->name('delete');
-//});
+Route::prefix('label')->name('label.')->group(function () {
+    Route::post('/create', [LabelController::class, 'store'])->name('create');
+    Route::post('/update', [LabelController::class, 'update'])->name('update');
+    Route::post('/delete', [LabelController::class, 'destroy'])->name('delete');
+});
+Route::prefix('soal')->name('soal.')->group(function () {
+    Route::post('/create', [SoalController::class, 'store'])->name('create');
+    Route::post('/create-mass', [SoalController::class, 'storeMass'])->name('create-mass');
+    Route::post('/update', [SoalController::class, 'update'])->name('update');
+    Route::post('/delete', [SoalController::class, 'destroy'])->name('delete');
+});
+Route::prefix('kuis')->name('kuis.')->group(function () {
+    Route::post('/create', [KuisController::class, 'store'])->name('create');
+    Route::post('/update', [KuisController::class, 'update'])->name('update');
+    Route::post('/delete', [KuisController::class, 'destroy'])->name('delete');
+});
 //
 //Route::get('/kuis', function () {
 //    return Inertia::render('KuisTest', [
 //        'soals' => \App\Models\Soal::select('id','pertanyaan','pilihan_jawaban')->limit(50)->get(),
 //    ]);
 //});
-Route::get('/test-nilai', function () {
-    return \Inertia\Inertia::render('Admin/AdminNilaiIndexPage');
-});
+//Route::get('/test-nilai', function () {
+//    return \Inertia\Inertia::render('Admin/AdminNilaiIndexPage');
+//});
 
 
 require __DIR__ . '/admin.php';

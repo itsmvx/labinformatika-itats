@@ -1,5 +1,7 @@
-import { clsx, type ClassValue } from "clsx"
-import { twMerge } from "tailwind-merge"
+import { clsx, type ClassValue } from "clsx";
+import { twMerge } from "tailwind-merge";
+import { format, parse as dateParse } from "date-fns";
+import { id as localeId } from "date-fns/locale";
 export function cn(...inputs: ClassValue[]) {
     return twMerge(clsx(inputs))
 }
@@ -16,6 +18,12 @@ export const romanToNumber = (roman: string): number => {
         prevValue = value;
     }
     return num;
+};
+export const parseSesiTime = (time: string, currentDate: string | Date): string => {
+    const date = dateParse(time, 'HH:mm:ss', new Date(currentDate));
+    return format(date, 'HH:mm', {
+        locale: localeId
+    });
 };
 
 //
