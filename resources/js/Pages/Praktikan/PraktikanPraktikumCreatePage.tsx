@@ -3,7 +3,7 @@ import { FormEvent, useState } from "react";
 import { Head, router } from "@inertiajs/react";
 import { CardDescription, CardTitle } from "@/components/ui/card";
 import { cn, parseSesiTime } from "@/lib/utils";
-import { ArrowBigLeft, Check, Loader2 } from "lucide-react";
+import { Check, Loader2 } from "lucide-react";
 import { z } from "zod";
 import axios, { AxiosError } from "axios";
 import { useToast } from "@/hooks/use-toast";
@@ -179,9 +179,6 @@ export default function PraktikanPraktikumCreatePage({ auth, jenisPraktikums, cu
         <>
             <PraktikanLayout auth={auth}>
                 <Head title="Praktikan - Registrasi Praktikum" />
-                <Button variant="ghost" size="icon" onClick={ () => router.visit(route('praktikan.praktikum.index')) }>
-                    <ArrowBigLeft />
-                </Button>
                 <CardTitle>
                     Registrasi Praktikum
                 </CardTitle>
