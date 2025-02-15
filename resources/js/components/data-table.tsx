@@ -12,10 +12,11 @@ import { ViewPerPage } from "@/components/view-per-page";
 import { PaginationData } from "@/types";
 import { LaravelPagination } from "@/components/laravel-pagination";
 
-const DataTable = <TData,>({ columns, data, pagination }: {
+const DataTable = <TData,>({ columns, data, pagination, showViewPerPage = true }: {
     columns: ColumnDef<TData>[];
     data: TData[];
     pagination?: PaginationData<TData[]>;
+    showViewPerPage?: boolean;
 }) => {
     const [sorting, setSorting] = useState<SortingState>([]);
     const [rowSelection, setRowSelection] = useState({});
@@ -32,7 +33,7 @@ const DataTable = <TData,>({ columns, data, pagination }: {
 
     return (
         <>
-            <div className="mx-auto sm:mx-0 rounded-md border overflow-x-auto w-[82vw] sm:w-full">
+            <div className="mx-auto md:mx-0 rounded-md border overflow-x-auto w-[82vw] sm:w-[90vw] md:w-full">
                 <Table>
                     <TableHeader>
                         {table.getHeaderGroups().map((headerGroup) => (
@@ -66,7 +67,9 @@ const DataTable = <TData,>({ columns, data, pagination }: {
                     </TableBody>
                 </Table>
             </div>
-            <ViewPerPage className="flex-1 pb-0.5" />
+            {showViewPerPage && (
+                <ViewPerPage className="flex-1 pb-0.5" />
+            )}
             {pagination && (
                 <LaravelPagination pagination={pagination} />
             )}

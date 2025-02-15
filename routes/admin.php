@@ -58,7 +58,6 @@ Route::prefix('admin')->name('admin.')->middleware('guard:admin')->group(functio
         Route::get('/', [AdminPagesController::class, 'kuisIndexPage'])->name('index');
         Route::get('/create', [AdminPagesController::class, 'kuisCreatePage'])->name('create');
         Route::get('/update', [AdminPagesController::class, 'kuisUpdatePage'])->name('update');
-        Route::get('/view', [AdminPagesController::class, 'kuisViewPage'])->name('view');
     });
     Route::prefix('nilai-praktikum')->name('nilai-praktikum.')->group(function () {
         Route::get('/', [AdminPagesController::class, 'nilaiIndexPage'])->name('index');

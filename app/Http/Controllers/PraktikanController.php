@@ -88,7 +88,7 @@ class PraktikanController extends Controller
                     'id' => Str::uuid(),
                     'nama' => $praktikan['nama'],
                     'username' => $praktikan['npm'],
-                    'password' => Hash::make($praktikan['username'], ['rounds' => 12]),
+                    'password' => Hash::make($praktikan['npm'], ['rounds' => 12]),
                     'created_at' => $now,
                     'updated_at' => $now,
                 ];
@@ -249,7 +249,13 @@ class PraktikanController extends Controller
                 'message' => empty($praktikans)
                     ? 'Server berhasil memproses permintaan, namun tidak ada data yang sesuai dengan pencarian diminta'
                     : 'Berhasil mengambil data!',
-                'data' => $praktikans,
+                'data' => $praktikans->map(function ($praktikan) {
+                    return [
+                        'id' => $praktikan->id,
+                        'nama' => $praktikan->nama,
+                        'npm' => $praktikan->username,
+                    ];
+                }),
             ]);
         } catch (QueryException $exception) {
             return Response::json([
