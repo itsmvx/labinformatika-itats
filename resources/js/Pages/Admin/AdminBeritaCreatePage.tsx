@@ -81,8 +81,8 @@ export default function AdminBeritaCreatePage({ auth, laboratoriums, jenisPrakti
             judul: judul,
             slug: slug,
             deskripsi: deskripsi,
-            prasyarat: prasyarat === deltaInit ? null : JSON.stringify(prasyarat),
-            konten: konten === deltaInit ? null : JSON.stringify(konten),
+            prasyarat: JSON.stringify(prasyarat),
+            konten: JSON.stringify(konten),
             alur: alur,
         })
             .then((res) => {
