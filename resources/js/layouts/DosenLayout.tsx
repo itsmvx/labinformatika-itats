@@ -11,12 +11,17 @@ import { Footer } from "@/components/app-footer";
 import { Toaster } from "@/components/ui/toaster";
 import { PageProps } from "@/types";
 import { ProfileDropdown } from "@/components/profile-dropdown";
+import { Head } from "@inertiajs/react";
 
 export const DosenLayout = ({ auth, children }: PageProps<{
     children: ReactNode;
 }>) => {
     return (
         <SidebarProvider>
+            <Head>
+                <meta name="description" content="Majestic Mahiru Shiina ❤️"/>
+                <meta name="author" content="Laboratorium Teknik Informatika ITATS"/>
+            </Head>
             <AdminSidebar />
             <SidebarInset>
                 <header className="flex h-16 shrink-0 items-center justify-between gap-2 border-b px-4">

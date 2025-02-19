@@ -59,7 +59,7 @@ export default function BeritaDetailPage({ auth, berita }: PageProps<{
         <>
             <Head title={ berita.judul }>
                 <meta name="description" content={ berita.deskripsi }/>
-                <meta name="author" content={ berita.laboratorium?.nama ?? 'Laboratorium Teknik Informatika ITATS' }/>
+                <meta name="author" content={ berita.laboratorium?.nama ? `Laboratorium ${berita.laboratorium.nama}` : 'Laboratorium Teknik Informatika ITATS' }/>
             </Head>
             <AppLayout auth={ auth }>
                 <header className="bg-primary text-primary-foreground py-4 px-5">

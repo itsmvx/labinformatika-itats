@@ -4,7 +4,7 @@ import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription, Di
 import { Button } from "@/components/ui/button";
 import { Electro, Glacio, Havoc, LogoJarkom, Spectro } from "@/lib/StaticImagesLib";
 import Cookies from "js-cookie";
-import { Link } from "@inertiajs/react";
+import { Head, Link } from "@inertiajs/react";
 import { ProfileDropdown } from "@/components/profile-dropdown";
 import { PageProps } from "@/types";
 import { Footer } from "@/components/app-footer";
@@ -24,6 +24,10 @@ export const AppLayout = ({ auth, children }: PageProps<{
 
     return (
         <>
+            <Head>
+                <meta name="description" content="Majestic Mahiru Shiina ❤️"/>
+                <meta name="author" content="Laboratorium Teknik Informatika ITATS"/>
+            </Head>
             <div className="flex flex-col min-h-screen">
                 <header className="px-4 lg:px-6 h-14 flex items-center">
                     <Link
