@@ -3,6 +3,7 @@
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\AslabController;
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\BeritaController;
 use App\Http\Controllers\DosenController;
 use App\Http\Controllers\JenisPraktikumController;
 use App\Http\Controllers\KuisController;
@@ -20,6 +21,7 @@ use App\Http\Controllers\PraktikumController;
 use App\Http\Controllers\PraktikumPraktikanController;
 use App\Http\Controllers\SesiPraktikumController;
 use App\Http\Controllers\SoalController;
+use App\Models\Aslab;
 use Illuminate\Support\Facades\Response;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
@@ -46,7 +48,11 @@ Route::get('/test', function () {
 });
 Route::post('/compress', [AuthController::class, 'compress']);
 
-Route::get('/', function () {return Inertia::render('Welcome');});
+Route::get('/', function () {
+    return Inertia::render('Welcome' , [
+        'aslabs' => fn() => Aslab::select(['id', 'nama', 'username', 'jabatan', 'avatar', 'laboratorium_id'])->with('laboratorium:id,nama')->where('aktif', true)->orderBy('username', 'asc')->get()
+    ]);
+});
 Route::get('/hall-of-fames', function () {return Inertia::render('HallOfFamesPage');})->name('hall-of-fames');
 Route::get('/ban-list', [PraktikanPagesController::class, 'banListPage'])->name('ban-list');
 
@@ -154,6 +160,13 @@ Route::prefix('kuis')->name('kuis.')->group(function () {
     Route::post('/create', [KuisController::class, 'store'])->name('create');
     Route::post('/update', [KuisController::class, 'update'])->name('update');
     Route::post('/delete', [KuisController::class, 'destroy'])->name('delete');
+});
+Route::prefix('berita')->name('berita.')->group(function () {
+    Route::get('/', [BeritaController::class, 'index'])->name('index');
+    Route::get('/{slug}', [BeritaController::class, 'show'])->name('show');
+    Route::post('/create', [BeritaController::class, 'store'])->name('create');
+    Route::post('/update', [BeritaController::class, 'update'])->name('update');
+    Route::post('/delete', [BeritaController::class, 'destroy'])->name('delete');
 });
 //
 //Route::get('/kuis', function () {

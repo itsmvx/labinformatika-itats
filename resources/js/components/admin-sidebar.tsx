@@ -138,6 +138,17 @@ export function AdminSidebar({ isMaster = false, ...props }: React.ComponentProp
                     },
                 ],
             },
+            {
+                title: "Berita",
+                url: "#",
+                items: [
+                    {
+                        title: "Manajemen Berita",
+                        url: route('admin.berita.index'),
+                        route: 'admin.berita.index'
+                    },
+                ],
+            },
         ],
     };
 

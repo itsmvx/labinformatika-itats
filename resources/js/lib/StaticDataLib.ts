@@ -1,6 +1,9 @@
+import type { Delta } from "quill";
+
 export const _MyWebConfig = {
     VIEW_PER_PAGE: [ 15, 30, 50, 100 ],
 };
+export const deltaInit = { ops: [{ insert: "\n" }] } as Delta;
 export const _NamaHari = [
     "Senin",
     "Selasa",

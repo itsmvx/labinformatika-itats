@@ -75,7 +75,7 @@ export default function PraktikanLoginPage() {
                     title: "Sukses!",
                     description: res.data.message,
                 });
-                router.visit(route('praktikan.dashboard'));
+                router.visit(route('praktikan.dashboard'), { replace: true });
             })
             .catch((err: unknown) => {
                 const errMsg: string = err instanceof AxiosError && err.response?.data?.message

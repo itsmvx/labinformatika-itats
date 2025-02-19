@@ -2,12 +2,16 @@ import { useState, useEffect, ReactNode } from 'react';
 import { Bell } from 'lucide-react';
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription, DialogFooter } from "@/components/ui/dialog";
 import { Button } from "@/components/ui/button";
-import { Electro, Glacio, Havoc, Spectro } from "@/lib/StaticImagesLib";
+import { Electro, Glacio, Havoc, LogoJarkom, Spectro } from "@/lib/StaticImagesLib";
 import Cookies from "js-cookie";
+import { Link } from "@inertiajs/react";
+import { ProfileDropdown } from "@/components/profile-dropdown";
+import { PageProps } from "@/types";
+import { Footer } from "@/components/app-footer";
 
-export const AppLayout = ({ children }: {
+export const AppLayout = ({ auth, children }: PageProps<{
     children: ReactNode;
-}) => {
+}>) => {
     const [isOpen, setIsOpen] = useState(false);
 
     useEffect(() => {
@@ -20,7 +24,25 @@ export const AppLayout = ({ children }: {
 
     return (
         <>
-            { children }
+            <div className="flex flex-col min-h-screen">
+                <header className="px-4 lg:px-6 h-14 flex items-center">
+                    <Link
+                        className="p-2 flex items-center justify-center gap-1.5 font-semibold bg-none hover:bg-muted transition-colors ease-in-out duration-150 rounded-md"
+                        href="#"
+                    >
+                        <img src={ LogoJarkom } alt="logo-jarkom" width={30} className="rounded-full"/>
+                        <span className="sr-only">Laboratorium Jaringan Komputer ITATS</span>
+                        <p>JARKOM JAYA</p>
+                    </Link>
+                    <nav className="ml-auto flex gap-4 sm:gap-6">
+                        <ProfileDropdown auth={auth} />
+                    </nav>
+                </header>
+                <main className="flex-1">
+                    { children }
+                </main>
+                <Footer />
+            </div>
             <Dialog open={isOpen} onOpenChange={setIsOpen}>
                 <DialogContent className="sm:max-w-[425px]">
                     <DialogHeader>

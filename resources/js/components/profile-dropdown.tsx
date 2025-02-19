@@ -70,7 +70,7 @@ export function ProfileDropdown({ className, auth }: PageProps<{
                     variant="ghost"
                     className={`flex items-center justify-start space-x-1 transition-colors duration-200
             ${open ? 'bg-accent text-accent-foreground' : 'hover:bg-accent hover:text-accent-foreground'}
-            focus:ring-0 focus:ring-offset-0 ${className ?? ''} w-60 !px-2`}
+            focus:ring-0 focus:ring-offset-0 ${className ?? ''} w-44 sm:w-52 md:w-60 !px-2`}
                 >
                     <Avatar className="h-8 w-8">
                         <AvatarImage src={auth.user.avatar && auth.role ? `/storage/${auth.role}/${auth.user.avatar}` : undefined} alt={auth.user.nama} />

@@ -74,7 +74,7 @@ export default function AslabLoginPage() {
                     title: "Sukses!",
                     description: res.data.message,
                 });
-                router.visit(route('aslab.dashboard'));
+                router.visit(route('aslab.dashboard'), { replace: true });
             })
             .catch((err: unknown) => {
                 const errMsg: string = err instanceof AxiosError && err.response?.data?.message

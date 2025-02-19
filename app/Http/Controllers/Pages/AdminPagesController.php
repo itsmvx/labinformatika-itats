@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Pages;
 use App\Http\Controllers\Controller;
 use App\Models\Admin;
 use App\Models\Aslab;
+use App\Models\Berita;
 use App\Models\Dosen;
 use App\Models\JenisPraktikum;
 use App\Models\Kuis;
@@ -750,4 +751,59 @@ class AdminPagesController extends Controller
         }
     }
 
+    public function beritaIndexPage(Request $request)
+    {
+        $authAdmin = Auth::guard('admin')->user();
+        if (!$authAdmin) {
+            abort(401);
+        }
+
+        $query = Berita::select([
+            'id',
+            'judul',
+            'deskripsi',
+            'updated_at',
+            'admin_id',
+            'jenis_praktikum_id',
+            'laboratorium_id',
+        ])
+            ->with(['admin:id,nama', 'laboratorium:id,nama', 'jenis_praktikum:id,nama'])
+            ->orderBy('created_at', 'desc');
+
+
+        $search = $request->query('search');
+        if ($search) {
+            $search = $request->query('search');
+            if ($search) {
+                $query->where('judul', 'like', '%' . $search . '%');
+            }
+        }
+
+        $viewPerPage = $this->getViewPerPage($request);
+        $beritas = $query->paginate($viewPerPage)->withQueryString();
+
+        return Inertia::render('Admin/AdminBeritaIndexPage', [
+            'pagination' => fn() => $beritas,
+        ]);
+    }
+    public function beritaCreatePage()
+    {
+        $authAdmin = Auth::guard('admin')->user();
+        if (!$authAdmin) {
+            abort(401);
+        }
+
+        $queryJenisPraktikum = JenisPraktikum::select('id', 'nama', 'laboratorium_id')->with('laboratorium:id,nama');
+        if ($authAdmin->laboratorium_id) {
+            $queryJenisPraktikum->where('laboratorium_id', $authAdmin->laboratorium_id);
+        }
+
+        $jenisPraktikums = $queryJenisPraktikum->orderBy('created_at', 'desc')->get();
+
+        return Inertia::render('Admin/AdminBeritaCreatePage', [
+            'currentDate' => Carbon::now()->timezone('Asia/Jakarta')->toDateString(),
+            'laboratoriums' => fn() => Laboratorium::select('id', 'nama')->get(),
+            'jenisPraktikums' => fn() => $jenisPraktikums,
+        ]);
+    }
 }
