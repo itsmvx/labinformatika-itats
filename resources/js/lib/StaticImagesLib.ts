@@ -13,6 +13,7 @@ import Havoc from "@/assets/ele-havoc.png";
 import Glacio from "@/assets/ele-glacio.png";
 import Electro from "@/assets/ele-electro.png";
 import HumpbackWhale from "@/assets/humpback-whale.webp";
+import LogoLogin from "@/assets/login-image.png";
 
 export {
     LogoJarkom,
@@ -30,4 +31,5 @@ export {
     FuminocchiPP,
     NoaPP,
     HumpbackWhale,
+    LogoLogin,
 };
