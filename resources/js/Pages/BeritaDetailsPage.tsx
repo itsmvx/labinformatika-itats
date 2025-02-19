@@ -57,35 +57,31 @@ export default function BeritaDetailPage({ auth, berita }: PageProps<{
     };
     return (
         <>
-            <>
-                <Head title="Berita">
-                    <meta
-                        name={ berita.judul }
-                        content={ berita.deskripsi }
-                    />
-                </Head>
-                <AppLayout auth={auth}>
-                    <header className="bg-primary text-primary-foreground py-4 px-5">
-                        <Link href={ route('berita.index') } className="text-2xl font-bold">Berita Lab. Informatika ITATS</Link>
-                    </header>
-                    <div className="space-y-2">
-                        <CardHeader>
-                            <CardTitle className="text-2xl h-16 line-clamp-2 text-ellipsis">{berita.judul}</CardTitle>
-                            <CardDescription>
-                                { berita.updated_at ? format(berita.updated_at, 'PPPp', { locale: localeId }) : ''}
-                                <span>, { berita.admin?.nama ?? '' }</span>
-                            </CardDescription>
-                        </CardHeader>
-                        <CardContent className="space-y-3 antialiased">
-                            <p className="text-start sm:text-justify leading-relaxed tracking-wide">
-                                {berita.deskripsi}
-                            </p>
-                            <PrasyaratElement />
-                            <KontenElement />
-                        </CardContent>
-                    </div>
-                </AppLayout>
-            </>
+            <Head title={ berita.judul }>
+                <meta name="description" content={ berita.deskripsi }/>
+                <meta name="author" content={ berita.laboratorium?.nama ?? 'Laboratorium Teknik Informatika ITATS' }/>
+            </Head>
+            <AppLayout auth={ auth }>
+                <header className="bg-primary text-primary-foreground py-4 px-5">
+                <Link href={ route('berita.index') } className="text-2xl font-bold">Berita Lab. Informatika ITATS</Link>
+                </header>
+                <div className="space-y-2">
+                    <CardHeader>
+                        <CardTitle className="text-2xl h-16 line-clamp-2 text-ellipsis">{berita.judul}</CardTitle>
+                        <CardDescription>
+                            { berita.updated_at ? format(berita.updated_at, 'PPPp', { locale: localeId }) : ''}
+                            <span>, { berita.admin?.nama ?? '' }</span>
+                        </CardDescription>
+                    </CardHeader>
+                    <CardContent className="space-y-3 antialiased">
+                        <p className="text-start sm:text-justify leading-relaxed tracking-wide">
+                            {berita.deskripsi}
+                        </p>
+                        <PrasyaratElement />
+                        <KontenElement />
+                    </CardContent>
+                </div>
+            </AppLayout>
         </>
     );
 }
