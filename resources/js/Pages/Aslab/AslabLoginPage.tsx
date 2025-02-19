@@ -191,8 +191,8 @@ export default function AslabLoginPage() {
                                         {form.onsubmit
                                             ? "Memuat..."
                                             : form.onSuccess
-                                            ? "Berhasil"
-                                            : "Masuk"}
+                                                ? "Berhasil"
+                                                : "Masuk"}
                                     </Button>
                                     <p
                                         className={`h-6 text-sm text-red-600 font-medium ${
