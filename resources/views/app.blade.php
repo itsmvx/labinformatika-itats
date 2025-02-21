@@ -3,6 +3,8 @@
     <head>
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="description" content="{{ $metaDescription ?? 'Majestic Mahiru Shiina ❤️' }}">
+        <meta name="author" content="{{ $metaAuthor ?? "Laboratorium Jaringan Komputer ITATS" }}">
         <title inertia>Labinformatika</title>
 
         <link rel="icon" href="{{ asset('favicon.ico') }}" type="image/x-icon">

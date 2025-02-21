@@ -105,6 +105,9 @@ class BeritaController extends Controller
 
         return Inertia::render('BeritaDetailsPage', [
             'berita' => fn() => $berita,
+        ])->withViewData([
+            'metaDescription' => $berita->deskripsi,
+            'metaAuthor' => $berita->laboratorium?->nama ? "Laboratorium " . $berita->laboratorium->nama : null,
         ]);
     }
 

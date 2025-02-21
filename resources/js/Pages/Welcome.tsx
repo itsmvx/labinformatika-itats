@@ -363,10 +363,7 @@ export default function LandingPage({
                                                         {aslab.username}
                                                     </p>
                                                     <Badge className="mt-2 font-medium text-base text-center bg-primary">
-                                                        {
-                                                            aslab.laboratorium
-                                                                .nama
-                                                        }
+                                                        { aslab.laboratorium.nama }
                                                     </Badge>
                                                 </CardContent>
                                             </Card>
