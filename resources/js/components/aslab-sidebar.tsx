@@ -84,7 +84,7 @@ export function AslabSidebar({ ...props }: React.ComponentProps<typeof Sidebar>)
                                 <img src={ LogoJarkom } width={ 80 } alt="jarkom-jaya"/>
                             </div>
                             <p className="font-semibold text-lg select-none">
-                                Jarkom Jaya
+                                LABORATORIUM INFORMATIKA ITATS
                             </p>
                         </div>
                     </SidebarMenuItem>
