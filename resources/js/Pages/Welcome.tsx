@@ -7,7 +7,14 @@ import {
     CardHeader,
     CardTitle,
 } from "@/components/ui/card";
-import { ChevronsDown, SquareArrowOutUpRight, UserCircle2 } from "lucide-react";
+import {
+    ArrowRightIcon,
+    CalendarIcon, ChevronRight,
+    ChevronsDown,
+    SquareArrowOutUpRight,
+    UserCircle2,
+    UserRound
+} from "lucide-react";
 import {
     LandingPrak,
     LandingPrak2,
@@ -25,12 +32,16 @@ import {
 import { AppLayout } from "@/layouts/AppLayout";
 import { PageProps } from "@/types";
 import { useRef, useState, useEffect } from "react";
-import { Head } from "@inertiajs/react";
+import { Head, Link, router } from "@inertiajs/react";
 import { Badge } from "@/components/ui/badge";
+import { ScrollArea, ScrollBar } from "@/components/ui/scroll-area";
+import { format } from "date-fns";
+import { id as localdeId } from "date-fns/locale";
 
 export default function LandingPage({
     auth,
     aslabs,
+    beritas
 }: PageProps<{
     aslabs: {
         id: string;
@@ -42,6 +53,21 @@ export default function LandingPage({
             id: string;
             nama: string;
         };
+    }[];
+    beritas: {
+        id: string;
+        judul: string;
+        slug: string;
+        deskripsi: string;
+        updated_at: string | null;
+        admin: {
+            id: string;
+            nama: string;
+        } | null;
+        laboratorium: {
+            id: string;
+            nama: string;
+        } | null;
     }[];
 }>) {
     const landingImages = [LandingPrak, LandingPrak2, LandingPrak3];
@@ -376,10 +402,130 @@ export default function LandingPage({
                         </Carousel>
                     </div>
                 </section>
-                <section
-                    id="cta"
-                    className="w-full py-12 md:py-24 lg:py-32 bg-gray-100"
-                >
+
+                <section id="news" className="w-full py-12 px-4 bg-muted">
+                    <Card className="pt-8 pb-4 px-0">
+                        <h2 className="text-3xl font-bold tracking-tighter sm:text-5xl text-center mb-12">
+                            Berita terbaru
+                        </h2>
+                        <div className="mx-auto !px-6">
+                            <ScrollArea className="w-full rounded-md">
+                                <div className="flex w-max space-x-4 py-4 px-2">
+                                    {beritas.map((berita) => (
+                                        <Card key={berita.id} className="w-[19.5rem] md:w-96 h-72 flex-shrink-0 rounded-sm shadow">
+                                            <CardHeader>
+                                                <CardTitle className="line-clamp-2 text-ellipsis">{berita.judul}</CardTitle>
+                                                <CardDescription className="space-y-0.5 *:flex *:items-center *:gap-0.5 text-sm">
+                                                    <div>
+                                                        <CalendarIcon size={16} />
+                                                        {berita.updated_at ? format(new Date(berita.updated_at), 'PPPp', { locale: localdeId }) : ''}
+                                                    </div>
+                                                    <div>
+                                                        <UserRound size={16} />
+                                                        {berita.admin?.nama ?? ''}
+                                                    </div>
+                                                    </CardDescription>
+                                            </CardHeader>
+                                            <CardContent className="min-h-24">
+                                                <p className="line-clamp-3 text-ellipsis">{berita.deskripsi}</p>
+                                            </CardContent>
+                                            <CardFooter className="px-4 items-end">
+                                                <Button variant="ghost" className="ml-auto w-min justify-between" onClick={() => router.visit(route('berita.show', { slug: berita.slug }))}>
+                                                    Baca selengkapnya <ArrowRightIcon className="h-4 w-4" />
+                                                </Button>
+                                            </CardFooter>
+                                        </Card>
+                                    ))}
+                                    {beritas.map((berita) => (
+                                        <Card key={berita.id} className="w-[19.5rem] md:w-96 h-72 flex-shrink-0 rounded-sm shadow">
+                                            <CardHeader>
+                                                <CardTitle className="line-clamp-2 text-ellipsis">{berita.judul}</CardTitle>
+                                                <CardDescription className="space-y-0.5 *:flex *:items-center *:gap-0.5 text-sm">
+                                                    <div>
+                                                        <CalendarIcon size={16} />
+                                                        {berita.updated_at ? format(new Date(berita.updated_at), 'PPPp', { locale: localdeId }) : ''}
+                                                    </div>
+                                                    <div>
+                                                        <UserRound size={16} />
+                                                        {berita.admin?.nama ?? ''}
+                                                    </div>
+                                                    </CardDescription>
+                                            </CardHeader>
+                                            <CardContent className="min-h-24">
+                                                <p className="line-clamp-3 text-ellipsis">{berita.deskripsi}</p>
+                                            </CardContent>
+                                            <CardFooter className="px-4 items-end">
+                                                <Button variant="ghost" className="ml-auto w-min justify-between" onClick={() => router.visit(route('berita.show', { slug: berita.slug }))}>
+                                                    Baca selengkapnya <ArrowRightIcon className="h-4 w-4" />
+                                                </Button>
+                                            </CardFooter>
+                                        </Card>
+                                    ))}
+                                    {beritas.map((berita) => (
+                                        <Card key={berita.id} className="w-[19.5rem] md:w-96 h-72 flex-shrink-0 rounded-sm shadow">
+                                            <CardHeader>
+                                                <CardTitle className="line-clamp-2 text-ellipsis">{berita.judul}</CardTitle>
+                                                <CardDescription className="space-y-0.5 *:flex *:items-center *:gap-0.5 text-sm">
+                                                    <div>
+                                                        <CalendarIcon size={16} />
+                                                        {berita.updated_at ? format(new Date(berita.updated_at), 'PPPp', { locale: localdeId }) : ''}
+                                                    </div>
+                                                    <div>
+                                                        <UserRound size={16} />
+                                                        {berita.admin?.nama ?? ''}
+                                                    </div>
+                                                    </CardDescription>
+                                            </CardHeader>
+                                            <CardContent className="min-h-24">
+                                                <p className="line-clamp-3 text-ellipsis">{berita.deskripsi}</p>
+                                            </CardContent>
+                                            <CardFooter className="px-4 items-end">
+                                                <Button variant="ghost" className="ml-auto w-min justify-between" onClick={() => router.visit(route('berita.show', { slug: berita.slug }))}>
+                                                    Baca selengkapnya <ArrowRightIcon className="h-4 w-4" />
+                                                </Button>
+                                            </CardFooter>
+                                        </Card>
+                                    ))}
+                                    {beritas.map((berita) => (
+                                        <Card key={berita.id} className="w-[19.5rem] md:w-96 h-72 flex-shrink-0 rounded-sm shadow">
+                                            <CardHeader>
+                                                <CardTitle className="line-clamp-2 text-ellipsis">{berita.judul}</CardTitle>
+                                                <CardDescription className="space-y-0.5 *:flex *:items-center *:gap-0.5 text-sm">
+                                                    <div>
+                                                        <CalendarIcon size={16} />
+                                                        {berita.updated_at ? format(new Date(berita.updated_at), 'PPPp', { locale: localdeId }) : ''}
+                                                    </div>
+                                                    <div>
+                                                        <UserRound size={16} />
+                                                        {berita.admin?.nama ?? ''}
+                                                    </div>
+                                                    </CardDescription>
+                                            </CardHeader>
+                                            <CardContent className="min-h-24">
+                                                <p className="line-clamp-3 text-ellipsis">{berita.deskripsi}</p>
+                                            </CardContent>
+                                            <CardFooter className="px-4 items-end">
+                                                <Button variant="ghost" className="ml-auto w-min justify-between" onClick={() => router.visit(route('berita.show', { slug: berita.slug }))}>
+                                                    Baca selengkapnya <ArrowRightIcon className="h-4 w-4" />
+                                                </Button>
+                                            </CardFooter>
+                                        </Card>
+                                    ))}
+                                </div>
+                                <ScrollBar orientation="horizontal" />
+                            </ScrollArea>
+                        </div>
+                        <CardFooter className="mt-3">
+                            <Button asChild variant="outline">
+                                <Link href={route('berita.index')} className="!ml-auto gap-1">
+                                    Lihat semua berita <ChevronRight size={16} />
+                                </Link>
+                            </Button>
+                        </CardFooter>
+                    </Card>
+                </section>
+
+                <section id="cta" className="w-full py-12 md:py-24 lg:py-32 bg-gray-100">
                     <div className="flex flex-col items-center space-y-4 text-center">
                         <div className="space-y-2">
                             <h2 className="text-3xl font-bold tracking-tighter sm:text-4xl md:text-5xl">

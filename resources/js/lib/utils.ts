@@ -5,6 +5,9 @@ import { id as localeId } from "date-fns/locale";
 export function cn(...inputs: ClassValue[]) {
     return twMerge(clsx(inputs))
 }
+export const capitalizeWords = (str: string) => {
+    return str.toLowerCase().replace(/\b\w/g, (char) => char.toUpperCase());
+};
 export const romanToNumber = (roman: string): number => {
     const map: Record<string, number> = {
         I: 1, V: 5, X: 10, L: 50, C: 100, D: 500, M: 1000,

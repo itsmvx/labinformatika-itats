@@ -11,17 +11,12 @@ import { Toaster } from "@/components/ui/toaster";
 import { PraktikanSidebar } from "@/components/praktikan-sidebar";
 import { ProfileDropdown } from "@/components/profile-dropdown";
 import { PageProps } from "@/types";
-import { Head } from "@inertiajs/react";
 
 export const PraktikanLayout = ({ auth, children }: PageProps<{
     children: ReactNode;
 }>) => {
     return (
         <SidebarProvider>
-            <Head>
-                <meta name="description" content="Majestic Mahiru Shiina ❤️"/>
-                <meta name="author" content="Laboratorium Teknik Informatika ITATS"/>
-            </Head>
             <PraktikanSidebar />
             <SidebarInset>
                 <header className="flex h-16 shrink-0 items-center justify-between gap-2 border-b px-4">

@@ -89,7 +89,7 @@ export function PraktikanSidebar({ ...props }: React.ComponentProps<typeof Sideb
                                 <img src={ LogoJarkom } width={ 80 } alt="jarkom-jaya"/>
                             </div>
                             <p className="font-semibold text-lg select-none">
-                                Jarkom Jaya
+                                Labinformatika
                             </p>
                         </div>
                     </SidebarMenuItem>

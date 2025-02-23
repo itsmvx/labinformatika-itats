@@ -22,6 +22,7 @@ use App\Http\Controllers\PraktikumPraktikanController;
 use App\Http\Controllers\SesiPraktikumController;
 use App\Http\Controllers\SoalController;
 use App\Models\Aslab;
+use App\Models\Berita;
 use Illuminate\Support\Facades\Response;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
@@ -50,7 +51,8 @@ Route::post('/compress', [AuthController::class, 'compress']);
 
 Route::get('/', function () {
     return Inertia::render('Welcome' , [
-        'aslabs' => fn() => Aslab::select(['id', 'nama', 'username', 'jabatan', 'avatar', 'laboratorium_id'])->with('laboratorium:id,nama')->where('aktif', true)->orderBy('username', 'asc')->get()
+        'aslabs' => fn() => Aslab::select(['id', 'nama', 'username', 'jabatan', 'avatar', 'laboratorium_id'])->with('laboratorium:id,nama')->where('aktif', true)->orderBy('username', 'asc')->get(),
+        'beritas' => fn() => Berita::select(['id', 'judul', 'slug', 'deskripsi', 'updated_at', 'admin_id', 'laboratorium_id'])->with(['admin:id,nama', 'laboratorium:id,nama'])->orderBy('updated_at', 'desc')->get()
     ]);
 });
 Route::get('/hall-of-fames', function () {return Inertia::render('HallOfFamesPage');})->name('hall-of-fames');

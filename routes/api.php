@@ -13,4 +13,6 @@ Route::name('api.')->group(function () {
     Route::get('check-npm', [PraktikanController::class, 'checkNpmGET'])->name('check-npm-get');
     Route::post('check-npm', [PraktikanController::class, 'checkNpmPOST'])->name('check-npm-post');
     Route::get('/praktikans', [PraktikanController::class, 'getPraktikans'])->name('praktikans');
+
+    Route::post('/verify-npm', [PraktikanController::class, 'verifyNpm'])->name('verify-npm');
 });

@@ -5,13 +5,16 @@ namespace App\Http\Controllers;
 use App\Models\BanList;
 use App\Models\Praktikan;
 use Illuminate\Database\QueryException;
+use Illuminate\Http\Client\RequestException;
 use Illuminate\Http\Request;
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Response;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Str;
 
 class PraktikanController extends Controller
@@ -51,14 +54,14 @@ class PraktikanController extends Controller
             'username.required' => 'NPM wajib diisi',
             'username.string' => 'Format NPM tidak sesuai',
             'username.min' => 'NPM Wajib diisi',
-            'username.regex' => 'Format NPM tidak sesuai 06.xxxx.1.xxxxx',
+            'username.regex' => 'Format NPM tidak sesuai xx.xxxx.x.xxxxx',
             'username.unique' => 'NPM sudah terdaftar!',
         ]);
 
 
         try {
             $password = $validated['password'] ?? $validated['username'];
-            Praktikan::create([
+            $praktikan = Praktikan::create([
                 'id' => Str::uuid(),
                 'nama' => $validated['nama'],
                 'username' => $validated['username'],
@@ -67,6 +70,11 @@ class PraktikanController extends Controller
 
             return Response::json([
                 'message' => 'Praktikan berhasil ditambahkan!',
+                'data' => [
+                    'id' => $praktikan->id,
+                    'nama' => $praktikan->nama,
+                    'npm' => $praktikan->username,
+                ]
             ]);
         } catch (QueryException $exception) {
             return $this->queryExceptionResponse($exception);
@@ -284,7 +292,7 @@ class PraktikanController extends Controller
 
             $extension = $request->file('avatar')->getClientOriginalExtension();
             $randomString = Str::random(8);
-            $filename = $praktikan->nama . '-' . $praktikan->username . '-' . $randomString . '.' . $extension;
+            $filename = Str::slug($praktikan->nama . '-' . $praktikan->username . '-' . $randomString . '.' . $extension);
 
             $avatarPath = $request->file('avatar')->storeAs('/', $filename, 'praktikan');
             $praktikan->update(['avatar' => $avatarPath]);
@@ -338,4 +346,78 @@ class PraktikanController extends Controller
             ]);
         }
     }
-}
+
+    public function verifyNpm(Request $request)
+    {
+        $validation = Validator::make($request->only('npm'), [
+            'npm' => [
+                'required',
+                'string',
+                'min:1',
+                'regex:/^\d{2}\.\d{4}\.\d{1}\.\d{5}$/',
+            ],
+        ], [
+            'npm.required' => 'NPM wajib diisi',
+            'npm.string' => 'Format NPM tidak sesuai',
+            'npm.min' => 'NPM Wajib diisi',
+            'npm.regex' => 'Format NPM tidak sesuai xx.xxxx.x.xxxxx',
+        ]);
+
+        if ($validation->fails()) {
+            return Response::json([
+                'message' => config('app.debug')
+                    ? $validation->errors()->first()
+                    : 'Kesalahan validasi'
+            ], 422);
+        }
+
+        try {
+            $validated = $validation->validated();
+            $isExistsPraktikan = Praktikan::where('username', $validated['npm'])->exists();
+
+            if ($isExistsPraktikan) {
+                return Response::json([
+                    'message' => 'Praktikan telah terdaftar, silahkan melanjutkan Login'
+                ], 409);
+            }
+
+            $url = env('API_VERIFY_NPM');
+
+            if (empty($url)) {
+                return Response::json([
+                    'message' => 'ENV Error! Mohon hubungi pihak pengembang ^-^'
+                ], 500);
+            }
+
+            $response = Http::post($url, ['npm' => $validated['npm']]);
+
+            if ($response->successful()) {
+                return Response::json([
+                    'message' => 'Data Mahasiswa ditemukan',
+                    ...$response->json()
+                ], 200);
+            }
+
+            $isNotExists = ($response->json('data') === null) && ($response->json('exists') === false);
+            $resData = [
+                'message' => $isNotExists
+                    ? 'Data Mahasiswa tidak ditemukan'
+                    : 'Server gagal memproses permintaan'
+            ];
+            if ($isNotExists) {
+                $resData['data'] = null;
+                $resData['exists'] = false;
+            }
+
+            return Response::json($resData, $isNotExists ? 200 : 500);
+        } catch (QueryException $exception) {
+            return $this->queryExceptionResponse($exception);
+        } catch (\Exception $exception) {
+            return Response::json([
+                'message' => 'Terjadi kesalahan, coba beberapa saat lagi',
+                'error' => config('app.debug')
+                    ? $exception->getMessage()
+                    : null,
+            ], 500);
+        }
+    }}
