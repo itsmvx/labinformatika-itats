@@ -45,7 +45,26 @@ export default function Test() {
             flexBasis: 'auto',
             justifyContent: 'center',
         },
+        bio: {
+            gap: 5,
+            fontSize: '8.5px'
+        },
+        bioRow: {
+            flexDirection: 'row',
+            gap: 2
+        },
+        bioTitle: {
+            fontFamily: 'Helvetica-Bold',
+            fontWeight: 'bold',
+            width: 40
+        },
+        bioAssistant: {
+            fontFamily: 'Helvetica-Bold',
+            fontWeight: 'bold',
+            width: 90
+        },
         tableWrapper: {
+            marginTop: 12,
             border: '0.5px solid #333333', // Border untuk seluruh table wrapper
             marginBottom: 20, // Memberikan jarak bawah
         },
@@ -55,16 +74,20 @@ export default function Test() {
         },
         row: {
             flexDirection: 'row',
+            alignItems: 'center',
+            justifyContent: 'center',
         },
         cell: {
-            border: '0.5px solid #333333', // Border untuk setiap cell
+            border: '0.5px solid #333333',
             padding: 6,
             flexGrow: 1,
             textAlign: 'center',
             fontFamily: 'Helvetica-Bold',
-            fontSize: '10.5px',
+            fontSize: '10px',
             fontWeight: 'bold',
-        }
+            alignContent: 'center'
+        },
+
     });
     const savePDF = async () => {
         try {
@@ -97,35 +120,98 @@ export default function Test() {
                                     aspectRatio: '3 / 4'
                                 }} />
                             </View>
-                            <View>
-                                <Text>Nama</Text>
-                                <Text>Nama</Text>
-                                <Text>Nama</Text>
-                                <Text>Nama</Text>
+                            <View style={styles.bio}>
+                                <View style={styles.bioRow}>
+                                    <Text style={styles.bioTitle}>
+                                        Nama
+                                    </Text>
+                                    <Text>
+                                        : Elaina Annisa Zahra
+                                    </Text>
+                                </View>
+                                <View style={styles.bioRow}>
+                                    <Text style={styles.bioTitle}>
+                                        NPM
+                                    </Text>
+                                    <Text>
+                                        : 06.2024.1.01234
+                                    </Text>
+                                </View>
+                                <View style={styles.bioRow}>
+                                    <Text style={styles.bioTitle}>
+                                        Sesi
+                                    </Text>
+                                    <Text>
+                                        : 06.2024.1.01234
+                                    </Text>
+                                </View>
+                                <View style={styles.bioRow}>
+                                    <Text style={styles.bioAssistant}>
+                                        Asisten Pembimbing
+                                    </Text>
+                                    <Text>
+                                        : Latiful Sirri
+                                    </Text>
+                                </View>
+                                <View style={styles.bioRow}>
+                                    <Text style={styles.bioAssistant}>
+                                        Dosen Pembimbing
+                                    </Text>
+                                    <Text>
+                                        : Cak Danang
+                                    </Text>
+                                </View>
                             </View>
                             {/*FILL*/}
                         </View>
-
                         <View style={styles.tableWrapper}>
                             <View style={{
                                 width: '100%',
-                                borderBottom: '0.5px solid #333333',
+                                border: '1px solid #333333',
                                 marginBottom: -1,
                             }}>
                                 <Text style={{ textAlign: 'center', fontFamily: 'Helvetica-Bold', fontSize: "10.5px", fontWeight: 'extrabold', padding: 2 }}>Pelanggaran</Text>
                             </View>
                             <View style={styles.table}>
                                 <View style={styles.row}>
-                                    <Text style={styles.cell}>Pertemuan 1</Text>
-                                    <Text style={styles.cell}>Pertemuan 2</Text>
-                                    <Text style={styles.cell}>Pertemuan 3</Text>
-                                    <Text style={styles.cell}>Pertemuan 4</Text>
+                                    { Array.from({ length: 8 }).map((_, index) => ((
+                                        <Text style={styles.cell}>P{index+1}</Text>
+                                    )))}
                                 </View>
                                 <View style={styles.row}>
-                                    <Text style={styles.cell}>-</Text>
-                                    <Text style={styles.cell}>-</Text>
-                                    <Text style={styles.cell}>-</Text>
-                                    <Text style={styles.cell}>-</Text>
+                                    <View style={{
+                                        border: '0.5px solid #333333',
+                                        padding: 20,
+                                        flexGrow: 1,
+                                    }}>{" "}</View> <View style={{
+                                        border: '0.5px solid #333333',
+                                        padding: 20,
+                                        flexGrow: 1,
+                                    }}>{" "}</View> <View style={{
+                                        border: '0.5px solid #333333',
+                                        padding: 20,
+                                        flexGrow: 1,
+                                    }}>{" "}</View> <View style={{
+                                        border: '0.5px solid #333333',
+                                        padding: 20,
+                                        flexGrow: 1,
+                                    }}>{" "}</View><View style={{
+                                        border: '0.5px solid #333333',
+                                        padding: 20,
+                                        flexGrow: 1,
+                                    }}>{" "}</View><View style={{
+                                        border: '0.5px solid #333333',
+                                        padding: 20,
+                                        flexGrow: 1,
+                                    }}>{" "}</View><View style={{
+                                        border: '0.5px solid #333333',
+                                        padding: 20,
+                                        flexGrow: 1,
+                                    }}>{" "}</View><View style={{
+                                        border: '0.5px solid #333333',
+                                        padding: 20,
+                                        flexGrow: 1,
+                                    }}>{" "}</View>
                                 </View>
                             </View>
                         </View>
