@@ -169,6 +169,9 @@ export default function PraktikanRegistrationPage() {
                 setVerifyForm((prevState) => ({
                     ...prevState,
                     npm: npm,
+                    onSubmit: false,
+                    onError: true,
+                    errMsg: errMsg
                 }));
             })
     }
@@ -327,6 +330,15 @@ export default function PraktikanRegistrationPage() {
                                             "Verifikasi NPM"
                                         )}
                                     </Button>
+                                    <p
+                                        className={`h-6 text-sm text-red-600 font-medium ${
+                                            verifyForm.onError && verifyForm.errMsg
+                                                ? "opacity-100"
+                                                : "opacity-0"
+                                        }`}
+                                    >
+                                        {verifyForm.errMsg}
+                                    </p>
                                 </div>
                             </form>
                         )}
